@@ -16,26 +16,16 @@ while(True):
         courseName = input("Enter Course Name: ")
         courseGrade = input("Enter Course Letter Grade: ")
         courseGrade = br.convertToNumberGrade(courseGrade)
+
         courseHours = input("Enter Course Credit Hours: ")
-        courseIsMajor = input("Is this course a major course? Y or N: ")
-        courseIsMajor = br.letterToBool(courseIsMajor)
-
-        while type(courseIsMajor) != bool:
-            print("Wrong Input Type")
-            courseIsMajor = input("Is this course a major course? Y or N: ")
-            courseIsMajor = br.letterToBool(courseIsMajor)
-
-        courseIsDuplicate = input("Is this a duplicate course? Y or N: ")
-        courseIsDuplicate = br.letterToBool(courseIsDuplicate)
+        courseIsMajor = br.validateInput("Is this course a major course? Y or N: ", ["Y", "N"])
+        courseIsDuplicate = br.validateInput("Is this course a duplicate course? Y or N: ", ["Y", "N"])
         
-        while type(courseIsDuplicate) != bool:
-            print("Wrong Input Type")
-            courseIsDuplicate = br.letterToBool(courseIsDuplicate)
-
         mainCourses[courseName] = gpa_classes.Course(courseName, courseGrade, courseHours, courseIsMajor, courseIsDuplicate, semesterCount)
-        continueCourse = input("Would you like to continue entering courses for semester {semesterCount}? N to cancel, any other key to continue: ")
+        continueCourse = input(f"Would you like to continue entering courses for semester {semesterCount}? N to cancel, any other key to continue: ")
         if continueCourse == 'N':
             break
+
     semesterCount += 1
     continueSemester = input("Would you like to continue semester? Y or N: ")
     if continueSemester == 'N':

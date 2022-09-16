@@ -11,16 +11,17 @@ grade_key = {
     'D': 1.0,
     'F': 0.0,
 }
-letterToBoolDict = {
-    'Y': True,
-    'N': False,
-}
 
-def letterToBool(letter):
-    if ((letter == 'Y') or (letter == 'N')):
-        Bool = letterToBoolDict[letter]
-    return Bool
-
-def convertToNumberGrade(letterGrade: str) -> float:
+def convertToNumGrade(letterGrade: str) -> float:
     gradePoints = grade_key[letterGrade]
     return gradePoints
+
+def validateInput(userPrompt, expectedInput):
+    while True:
+        userInput = input(userPrompt)
+        if userInput in expectedInput:
+            return userInput
+        else:
+            print("Incorrect Input. Try again. Expected inputs include: ", expectedInput)
+
+

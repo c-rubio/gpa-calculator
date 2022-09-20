@@ -16,9 +16,14 @@ def convertToNumGrade(letterGrade: str) -> float:
     gradePoints = grade_key[letterGrade]
     return gradePoints
 
-def validateInput(userPrompt, expectedInput):
+def validateInput(userPrompt, expectedInput, expectedType):
     while True:
         userInput = input(userPrompt)
+        if type is not None:
+            try:
+                userInput = expectedType(userInput)
+            except ValueError:
+                print("Improper Input Value. Try Again.")
         if userInput in expectedInput:
             return userInput
         else:

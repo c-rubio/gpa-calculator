@@ -10,25 +10,25 @@ class Course:
         self.semester = semester
         
     def __str__(self):
-        return f'{self.name} {self.grade} {self.hours} {self.isMajor} {self.isDuplicate}'
+        return f'Course Name: {self.name} Grade: {self.grade} Credit Hours: {self.hours} Major Course: {self.isMajor} Duplicate Course: {self.isDuplicate}'
 
     def getName(self) -> None:
-        print("Course Name: ", self.name)
+        return self.name
     
     def getGrade(self) -> None:
-        print(f"Course Name: {self.grade:.2f}")
+        return self.grade
     
     def getHours(self) -> None:
-        print("Course Hours: ", self.hours)
+        return self.hours
 
     def getMajor(self) -> None:
-        print("Major Course: ", self.isMajor)
+        return self.isMajor
     
     def getDuplicate(self) -> None:
-        print("Duplicate Course: ", self.isDuplicate)
+        return self.isDuplicate
     
     def getSemester(self) -> None:
-        print("Duplicate Course: ", self.isDuplicate)
+        return self.semester
 
     def setName(self, name: str) -> None:
         self.name = name

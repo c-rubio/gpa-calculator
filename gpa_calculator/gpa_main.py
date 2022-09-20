@@ -1,35 +1,82 @@
-# Basic GPA calculator using Object-Oriented Programming. No use of GUI at the moment. 
-# FIXME Program not operational 
+# Basic GPA calculator for NC A&T using Object-Oriented Programming. No use of GUI at the moment. 
+
 import gpa_classes
 import gpa_brules as br
 
 mainCourses = {}
-archivedCourses = []
+archivedCourses = {}
 
 semesterCount = 1
 courseNum = 0
+totalCredHrs = 0
+totalGradePts = 0
+honorsCredHrs = 0
+honorsGradePts = 0
+majorCredHrs = 0
+majorGradePts = 0
+
 print("Hello!")
 print("Welcome to Christian's GPA Calculator")
 
-while(True):
-    while(True):
-        courseName = input("Enter Course Name: ")
-        courseGrade = input("Enter Course Letter Grade: ")
-        courseGrade = br.convertToNumberGrade(courseGrade)
+while True:
+    while True:
+        courseName = input("Enter Course Name: ").upper()
+        courseGrade = input("Enter Course Letter Grade: ").upper()
+        courseGrade = br.convertToNumGrade(courseGrade)
 
-        courseHours = input("Enter Course Credit Hours: ")
-        courseIsMajor = br.validateInput("Is this course a major course? Y or N: ", ["Y", "N"])
-        courseIsDuplicate = br.validateInput("Is this course a duplicate course? Y or N: ", ["Y", "N"])
-        
-        mainCourses[courseName] = gpa_classes.Course(courseName, courseGrade, courseHours, courseIsMajor, courseIsDuplicate, semesterCount)
-        continueCourse = input(f"Would you like to continue entering courses for semester {semesterCount}? N to cancel, any other key to continue: ")
-        if continueCourse == 'N':
+        courseHours = int(input("Enter Course Credit Hours: "))
+        courseIsMajor = br.validateInput("Is this course a major course? Y or N: ", ["Y", "N"], str)
+        courseIsDuplicate = br.validateInput("Is this course a duplicate course? Y or N: ", ["Y", "N"], str)
+
+        if courseIsDuplicate == "Y":
+            archivedCourses[courseName] = mainCourses[courseName]
+            del mainCourses[courseName]
+            currCourse = gpa_classes.Course(courseName, courseGrade, courseHours, courseIsMajor, courseIsDuplicate, semesterCount)
+            mainCourses[currCourse.getName()] = currCourse
+        else: 
+            currCourse = gpa_classes.Course(courseName, courseGrade, courseHours, courseIsMajor, courseIsDuplicate, semesterCount)
+            mainCourses[currCourse.getName()] = currCourse
+
+        contSemester = br.validateInput("Would you like to continue entering courses for this semester? Y or N: ", ["Y", "N"], str)
+        if contSemester == 'N':
             break
 
     semesterCount += 1
-    continueSemester = input("Would you like to continue semester? Y or N: ")
-    if continueSemester == 'N':
+    contTranscript = br.validateInput("Would you like to continue to next semester? Y or N: ", ["Y", "N"], str)
+    if contTranscript == 'N':
         break
-    
+
 for course in mainCourses.values():
-    print(course)
+    if course.getDuplicate() == "Y":
+        honorsCredHrs += course.getHours()
+        honorsGradePts += course.getGrade() * course.getHours()
+        continue
+    if course.getMajor() == "Y":
+        majorCredHrs += course.getHours()
+        majorGradePts  += course.getGrade() * course.getHours()
+
+    totalCredHrs += course.getHours()
+    totalGradePts += course.getGrade() * course.getHours()
+
+if majorCredHrs != 0:
+    majorGPA = majorGradePts / majorCredHrs
+else:
+    majorGPA = 0
+    print("Major GPA can not be computed, as no major credit hours have been attempted.")
+    
+if honorsCredHrs != 0:
+    honorsGPA = honorsGradePts / honorsCredHrs
+else:
+    honorsGPA = 0
+    print("Honors GPA can not be computed, as no honors credit hours have been attempted.")
+
+if totalCredHrs != 0:
+    GPA = totalGradePts / totalCredHrs
+else:
+    GPA = 0
+    print("Primary GPA can not be computed. No credit hours attempted.")
+
+print(f"Major GPA: {majorGPA}")
+print(f"Honors GPA: {honorsGPA}")
+print(f"Primary GPA: {GPA}")
+

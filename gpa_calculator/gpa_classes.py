@@ -1,55 +1,63 @@
+# Course class used to organize instances of classes
+
+
 import gpa_brules as br
 
+
 class Course:
-    def __init__(self, name: str, grade: float, hours: float, isMajor: bool, isDuplicate: bool, semester: int) -> None:
+    def __init__(
+            self, name: str, grade: float, hours: float,
+            isMajor: bool, is_duplicate: bool, semester: int) -> None:
+
         self.name = name
         self.grade = grade
         self.hours = hours
         self.isMajor = isMajor
-        self.isDuplicate = isDuplicate
+        self.isDuplicate = is_duplicate
         self.semester = semester
-        
-    def __str__(self):
-        return f'Course Name: {self.name} Grade: {self.grade} Credit Hours: {self.hours} Major Course: {self.isMajor} Duplicate Course: {self.isDuplicate}'
 
-    def getName(self) -> None:
+    def __str__(self):
+        return (f'Course Name: {self.name} Grade: {self.grade}', 
+        f'Credit Hours: {self.hours} Major Course: {self.isMajor}', 
+        f'Duplicate Course: {self.isDuplicate}')
+
+    def get_name(self) -> None:
         return self.name
-    
-    def getGrade(self) -> None:
+
+    def get_grade(self) -> None:
         return self.grade
-    
-    def getHours(self) -> None:
+
+    def get_hours(self) -> None:
         return self.hours
 
-    def getMajor(self) -> None:
+    def get_major(self) -> None:
         return self.isMajor
-    
-    def getDuplicate(self) -> None:
+
+    def get_duplicate(self) -> None:
         return self.isDuplicate
-    
-    def getSemester(self) -> None:
+
+    def get_semester(self) -> None:
         return self.semester
 
-    def setName(self, name: str) -> None:
+    def set_name(self, name: str) -> None:
         self.name = name
 
-    def setGrade(self, grade: str) -> None:
+    def set_grade(self, grade: str) -> None:
         grade = br.grade_key(grade)
         self.grade = grade
-    
-    def setHours(self, hours: float) -> None:
+
+    def set_hours(self, hours: float) -> None:
         self.hours = hours
 
-    def setMajor(self, isMajor: bool) -> None:
+    def set_major(self, isMajor: bool) -> None:
         self.isMajor = isMajor
-    
-    def setDuplicate(self, isDuplicate) -> None:
+
+    def set_duplicate(self, isDuplicate) -> None:
         self.isDuplicate = isDuplicate
 
-    def printCourse(self) -> None:
-        self.getName()
-        self.getGrade()
-        self.getHours()
-        self.getMajor()
-        self.getDuplicate()
-        
+    def print_course(self) -> None:
+        self.get_name()
+        self.get_grade()
+        self.get_hours()
+        self.get_major()
+        self.get_duplicate()

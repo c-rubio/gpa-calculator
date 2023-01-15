@@ -1,4 +1,4 @@
-# Basic GPA calculator for NC A&T using Object-Oriented Programming. No use of GUI at the moment. 
+# Basic GPA calculator based upon NC A&T policies using Object-Oriented Programming.
 
 import gpa_classes
 import gpa_brules as br
@@ -6,6 +6,8 @@ import gpa_brules as br
 mainCourses = {}
 archivedCourses = {}
 
+
+# variable initialization
 semesterCount = 1
 courseNum = 0
 totalCredHrs = 0
@@ -15,8 +17,8 @@ honorsGradePts = 0
 majorCredHrs = 0
 majorGradePts = 0
 
-print("Hello!")
-print("Welcome to Christian's GPA Calculator")
+print("Hello,")
+print("Welcome to the basic GPA Calculator")
 
 while True:
     while True:

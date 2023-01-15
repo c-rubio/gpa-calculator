@@ -114,7 +114,8 @@ if total_cred_hrs != 0:
 else:
     gpa = 0
     print("Primary GPA can not be computed. No credit hours attempted.")
-
+    
+# TODO: Add in number of classes taken and split GPA by semester
 print(f"Major GPA: {major_gpa:.2f}")
 print(f"Honors GPA: {honors_gpa:.2f}")
 print(f"Primary GPA: {gpa:.2f}")

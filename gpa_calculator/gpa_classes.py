@@ -7,19 +7,19 @@ import gpa_brules as br
 class Course:
     def __init__(
             self, name: str, grade: float, hours: float,
-            isMajor: bool, is_duplicate: bool, semester: int) -> None:
+            is_major: bool, is_duplicate: bool, semester: int) -> None:
 
         self.name = name
         self.grade = grade
         self.hours = hours
-        self.isMajor = isMajor
-        self.isDuplicate = is_duplicate
+        self.is_major = is_major
+        self.is_duplicate = is_duplicate
         self.semester = semester
 
     def __str__(self):
         return (f'Course Name: {self.name} Grade: {self.grade}', 
-        f'Credit Hours: {self.hours} Major Course: {self.isMajor}', 
-        f'Duplicate Course: {self.isDuplicate}')
+        f'Credit Hours: {self.hours} Major Course: {self.is_major}', 
+        f'Duplicate Course: {self.is_duplicate}')
 
     def get_name(self) -> None:
         return self.name
@@ -31,10 +31,10 @@ class Course:
         return self.hours
 
     def get_major(self) -> None:
-        return self.isMajor
+        return self.is_major
 
     def get_duplicate(self) -> None:
-        return self.isDuplicate
+        return self.is_duplicate
 
     def get_semester(self) -> None:
         return self.semester
@@ -49,11 +49,11 @@ class Course:
     def set_hours(self, hours: float) -> None:
         self.hours = hours
 
-    def set_major(self, isMajor: bool) -> None:
-        self.isMajor = isMajor
+    def set_major(self, is_major: bool) -> None:
+        self.is_major = is_major
 
-    def set_duplicate(self, isDuplicate) -> None:
-        self.isDuplicate = isDuplicate
+    def set_duplicate(self, is_duplicate) -> None:
+        self.is_duplicate = is_duplicate
 
     def print_course(self) -> None:
         self.get_name()

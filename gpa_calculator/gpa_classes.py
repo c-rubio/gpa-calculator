@@ -1,4 +1,5 @@
-# Course class used to organize instances of classes
+# Course class used to organize individual instances of courses and allow for
+# organization into a dict data structure
 
 
 import gpa_brules as br

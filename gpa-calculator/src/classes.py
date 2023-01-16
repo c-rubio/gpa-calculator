@@ -2,7 +2,7 @@
 # organization into a dict data structure
 
 
-import gpa_brules as br
+import helpers as hp
 
 
 class Course:
@@ -44,7 +44,7 @@ class Course:
         self.name = name
 
     def set_grade(self, grade: str) -> None:
-        grade = br.grade_key(grade)
+        grade = hp.grade_key(grade)
         self.grade = grade
 
     def set_hours(self, hours: float) -> None:

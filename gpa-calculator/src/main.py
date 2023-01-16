@@ -2,8 +2,8 @@
 # using Object-Oriented Programming.
 
 
-import gpa_classes
-import gpa_brules as br
+import classes
+import helpers as hp
 
 
 main_courses = {}        # stores all courses except for outdated retaken courses
@@ -13,8 +13,8 @@ archived_courses = {}    # stores outdated retaken course grades
 semester_count = 1
 
 # total - gpa factors that contribute towards transcript GPA
-total_cred_hrs = 0
-total_grade_pts = 0
+transcript_cred_hrs = 0
+transcript_grade_pts = 0
 
 # honors - gpa factors that include all taken courses
 honors_cred_hrs = 0
@@ -32,18 +32,18 @@ while True:             # outer loop covers a singular semester
         # prompt user to input course information
         course_name = input("Enter Course Name: ").upper()
         course_grade = input("Enter Course Letter Grade: ").upper()
-        course_grade = br.letter_to_num_grade(course_grade)
+        course_grade = hp.letter_to_num_grade(course_grade)
         course_hours = int(input("Enter Course Credit Hours: "))
 
-        is_course_major = br.validate_input(
+        is_course_major = hp.validate_input(
             "Is this course a major course? Y or N: ",
             ["Y", "y", "N", "n"], str).upper()
-        is_course_major = br.convert_bool(is_course_major, true_var="Y")
+        is_course_major = hp.convert_bool(is_course_major, true_var="Y")
 
-        is_course_duplicate = br.validate_input(
+        is_course_duplicate = hp.validate_input(
             "Is this course a duplicate course Y or N: ",
             ["Y", "y", "N", "n"], str).upper()
-        is_course_duplicate = br.convert_bool(is_course_duplicate, true_var="Y")
+        is_course_duplicate = hp.convert_bool(is_course_duplicate, true_var="Y")
 
         # handles a retaken course, taking the old grade and moving it to the
         # archive dict, while adding the new grade to the main dict
@@ -51,30 +51,30 @@ while True:             # outer loop covers a singular semester
             archived_courses[course_name] = main_courses[course_name]
             del main_courses[course_name]
 
-            current_course = gpa_classes.Course(
+            current_course = classes.Course(
                 course_name, course_grade, course_hours, is_course_major,
                 is_course_duplicate, semester_count)
 
             main_courses[current_course.get_name()] = current_course
         else:
-            current_course = gpa_classes.Course(
+            current_course = classes.Course(
                 course_name, course_grade, course_hours, is_course_major,
                 is_course_duplicate, semester_count)
 
             main_courses[current_course.get_name()] = current_course
 
-        continue_semester = br.validate_input(
+        continue_semester = hp.validate_input(
             "Would you like to continue entering courses for this semester?" +
             ", Y or N: ", ["Y", "y", "N", "n"], str).upper()
-        continue_semester = br.convert_bool(continue_semester, "Y")
+        continue_semester = hp.convert_bool(continue_semester, "Y")
         if not continue_semester:
             break
 
     semester_count += 1
-    continue_transcript = br.validate_input(
+    continue_transcript = hp.validate_input(
         "Would you like to continue to next semester?" + 
         "Y or N: ", ["Y", "y", "N", "n"], str).upper()
-    continue_transcript = br.convert_bool(continue_transcript, "Y")
+    continue_transcript = hp.convert_bool(continue_transcript, "Y")
     if not continue_transcript:
         break
 
@@ -85,10 +85,10 @@ for course in main_courses.values():
         major_courses[current_course_name] = main_courses[current_course_name]
 
 # computing all gpa factors using course dictionaries
-total_cred_hrs, total_grade_pts = br.compute_gpa_factors(main_courses)
-major_cred_hrs, major_grade_pts = br.compute_gpa_factors(major_courses)
-honors_cred_hrs, honors_grade_pts = br.compute_gpa_factors(
-        archived_courses, total_cred_hrs, total_grade_pts)    
+transcript_cred_hrs, transcript_grade_pts = hp.compute_gpa_factors(main_courses)
+major_cred_hrs, major_grade_pts = hp.compute_gpa_factors(major_courses)
+honors_cred_hrs, honors_grade_pts = hp.compute_gpa_factors(
+        archived_courses, transcript_cred_hrs, transcript_grade_pts)    
 
 if major_cred_hrs != 0:
     major_gpa = major_grade_pts / major_cred_hrs # gpa = grade_pts / cred_hrs
@@ -106,8 +106,8 @@ else:
         "Honors GPA can not be computed,",
         "as no honors credit hours have been attempted.")
 
-if total_cred_hrs != 0:
-    gpa = total_grade_pts / total_cred_hrs
+if transcript_cred_hrs != 0:
+    gpa = transcript_grade_pts / transcript_cred_hrs
 else:
     gpa = 0
     print("Primary GPA can not be computed. No credit hours attempted.")

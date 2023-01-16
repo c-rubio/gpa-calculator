@@ -4,13 +4,14 @@
 
 import classes
 import helpers as hp
-
+import splash
 
 main_courses = {}        # stores all courses except for outdated retaken courses
 major_courses = {}       # stores only courses related to major
 archived_courses = {}    # stores outdated retaken course grades
 
 semester_count = 1
+start = False
 
 # total - gpa factors that contribute towards transcript GPA
 transcript_cred_hrs = 0
@@ -24,10 +25,20 @@ honors_grade_pts = 0
 major_cred_hrs = 0
 major_grade_pts = 0
 
-print("Hello,")
-print("Welcome to the basic GPA Calculator")
+# splash screen
+print()
+splash.print_name()
+splash.print_title()
 
-while True:             # outer loop covers a singular semester
+# user is prompted to confirm program start, else the program is ended.
+start = hp.validate_input(
+    "\n\nEnter Y to start, N to exit: ", ["Y", "y", "N", "n"], str).upper()
+start = hp.convert_bool(start, true_var="Y")
+if not start:
+    print("\nGoodbye!")
+    quit()
+
+while start:            # outer loop covers a semester(s)
     while True:         # inner loop covers a singular course
         # prompt user to input course information
         course_name = input("\nEnter Course Name: ").upper()
@@ -90,6 +101,7 @@ major_cred_hrs, major_grade_pts = hp.compute_gpa_factors(major_courses)
 honors_cred_hrs, honors_grade_pts = hp.compute_gpa_factors(
         archived_courses, transcript_cred_hrs, transcript_grade_pts)    
 
+# TODO: change gpa computation blocks to functions
 if major_cred_hrs != 0:
     major_gpa = major_grade_pts / major_cred_hrs # gpa = grade_pts / cred_hrs
 else:
@@ -113,6 +125,6 @@ else:
     print("Primary GPA can not be computed. No credit hours attempted.")
     
 # TODO: Add in number of classes taken and split GPA by semester
-print(f"Transcript GPA: {gpa:.2f}")
-print(f"Major GPA: {major_gpa:.2f}")
+print(f"\nTranscript GPA: {gpa:.2f}")
 print(f"Honors GPA: {honors_gpa:.2f}")
+print(f"Major GPA: {major_gpa:.2f}")

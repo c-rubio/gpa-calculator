@@ -53,29 +53,6 @@ def validate_input(user_prompt, expected_input, expected_type):
             print("Incorrect Input. Try again.",
             "Expected inputs include: ", expected_input)
 
-def compute_gpa_factors(courses, cred_hrs: int = 0, grade_pts: int = 0):
-    """
-    compute_gpa_factors updates and computes the credit hours and grade points
-    for a GPA calculation based upon information from iterable data structure 
-    filled with Course object instances
-
-    :param courses: iterable data structure containing Course objects
-    :param cred_hrs: credit hour variable to be updated
-    :param grade_pts: grade point variable to be updated
-    :return: updated credit hours and grade points
-    """
-    if courses is None: 
-        print("Invalid Call, Pass a course storage as argument.")
-        return cred_hrs, grade_pts
-
-    if len(courses) == 0:
-        return cred_hrs, grade_pts
-
-    for course in courses.values():
-        cred_hrs += course.get_hours()
-        grade_pts += course.get_grade() * course.get_hours()
-    return cred_hrs, grade_pts
-
     
 def convert_bool(attr, true_var) -> bool:
     """

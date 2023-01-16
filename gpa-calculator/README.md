@@ -1,16 +1,14 @@
 # GPA CALCULATOR
 
 <br />
-
 <div align="center">
-                                                                                                                                                          
-                                                                                                                                                          
-                                                                                                                                                          
+
+![splash](https://user-images.githubusercontent.com/98237169/212607312-560941ab-135d-4404-a466-972976563efd.png)
 
 <h3 align="center"></h3>
 
   <p align="center">
-    This is a basic GPA calculator that can consider for various NC A&T GPA types, including the transcript GPA, honors GPA, and major GPA. 
+This is a basic GPA calculator that can consider for various GPA types, including the transcript GPA, honors GPA, and major GPA. Grade policies are based upon NC A&T policies.
 
 Code standardization is observed (PEP8), as well as modular programming. Object-Oriented Programming is implemented with the usage of the "Course" class to  organize course information. The dictionary datastructure is used to store instances of courses. 
     <br />

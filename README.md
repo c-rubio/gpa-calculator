@@ -18,3 +18,7 @@ Projects are as follows:
     This project is based upon calculating the different GPA's that NC A&T implements. These include the transcript, honors, and major GPA. It functions as a practice for coding standards and object-oriented programming. It's still a work in progress, Since it functions at the moment, my next steps are continuing to improve code organization and readability.
   </p>
 </div>
+<br>
+
+<h2 align="center">Project 2: Object-Avoiding Arduino Car </h2>
+<p align="center"> N/A - TO BE COMMITTED </p>

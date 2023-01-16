@@ -31,10 +31,10 @@ class Course:
     def get_hours(self) -> None:
         return self.hours
 
-    def get_major(self) -> None:
+    def get_is_major(self) -> None:
         return self.is_major
 
-    def get_duplicate(self) -> None:
+    def get_is_duplicate(self) -> None:
         return self.is_duplicate
 
     def get_semester(self) -> None:
@@ -60,5 +60,5 @@ class Course:
         self.get_name()
         self.get_grade()
         self.get_hours()
-        self.get_major()
-        self.get_duplicate()
+        self.get_is_major()
+        self.get_is_duplicate()

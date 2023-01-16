@@ -58,3 +58,21 @@ def validate_input(user_prompt, expected_input, expected_type):
         else:
             print("Incorrect Input. Try again. \
             Expected inputs include: ", expected_input)
+
+def compute_gpa_factors(courses, cred_hrs: int = 0, grade_pts: int = 0):
+    if courses is None: 
+        print("Invalid Call, Pass a course storage as argument.")
+        return cred_hrs, grade_pts
+    if len(courses) == 0:
+        return cred_hrs, grade_pts
+    for course in courses.values():
+        cred_hrs += course.get_hours()
+        grade_pts += course.get_grade() * course.get_hours()
+        return cred_hrs, grade_pts
+
+    
+def convert_bool(attr, true_var) -> bool:
+    if attr == true_var:
+        return True
+    else:
+        return False

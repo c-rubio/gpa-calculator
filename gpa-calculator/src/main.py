@@ -6,7 +6,7 @@ import classes
 import helpers as hp
 import splash
 
-main_courses = {}        # stores all courses except for outdated retaken courses
+transcript_courses = {}        # stores all courses except for outdated retaken courses
 major_courses = {}       # stores only courses related to major
 archived_courses = {}    # stores outdated retaken course grades
 
@@ -44,39 +44,31 @@ while start:            # outer loop covers a semester(s)
         course_name = input("\nEnter Course Name: ").upper()
         course_grade = input("Enter Course Letter Grade: ").upper()
         course_grade = hp.letter_to_num_grade(course_grade)
-        course_hours = int(input("Enter Course Credit Hours: "))
+        course_hours = float(input("Enter Course Credit Hours: "))
 
         is_course_major = hp.validate_input(
             "Is this course a major course? Y or N: ",
             ["Y", "y", "N", "n"], str).upper()
         is_course_major = hp.convert_bool(is_course_major, true_var="Y")
+        is_course_duplicate = False
 
-        is_course_duplicate = hp.validate_input(
-            "Is this course a duplicate course Y or N: ",
-            ["Y", "y", "N", "n"], str).upper()
-        is_course_duplicate = hp.convert_bool(is_course_duplicate, true_var="Y")
-
-        # handles a retaken course, taking the old grade and moving it to the
-        # archive dict, while adding the new grade to the main dict
-        if is_course_duplicate:
-            archived_courses[course_name] = main_courses[course_name]
-            del main_courses[course_name]
-
-            current_course = classes.Course(
-                course_name, course_grade, course_hours, is_course_major,
-                is_course_duplicate, semester_count)
-
-            main_courses[current_course.get_name()] = current_course
-        else:
-            current_course = classes.Course(
-                course_name, course_grade, course_hours, is_course_major,
-                is_course_duplicate, semester_count)
-
-            main_courses[current_course.get_name()] = current_course
+        if semester_count > 1:
+            for name, course_info in transcript_courses.items():
+                if course_name == name and semester_count != course_info.semester:
+                    print("DUPLICATE COURSE DETECTED")
+                    is_course_duplicate = True
+                    archived_courses[course_name] = transcript_courses[name]
+                    del transcript_courses[name]
+                    break
+         
+        current_course = classes.Course(
+        course_name, course_grade, course_hours, is_course_major,
+        is_course_duplicate, semester_count)
+        transcript_courses[current_course.name] = current_course
 
         continue_semester = hp.validate_input(
-            "\nWould you like to continue entering courses for this semester?" +
-            " Y or N: ", ["Y", "y", "N", "n"], str).upper()
+        "\nWould you like to continue entering courses for this semester?" +
+        " Y or N: ", ["Y", "y", "N", "n"], str).upper()
         continue_semester = hp.convert_bool(continue_semester, "Y")
         if not continue_semester:
             break
@@ -90,15 +82,14 @@ while start:            # outer loop covers a semester(s)
         break
 
 # filling the major_courses dict with a student's major related courses.
-for course in main_courses.values():
-    if course.get_is_major():
-        current_course_name = course.get_name()
-        major_courses[current_course_name] = main_courses[current_course_name]
+for course in transcript_courses.values():
+    if course.is_major:
+        major_courses[course.name] = transcript_courses[course.name]
 
 # computing all gpa factors using course dictionaries
-transcript_cred_hrs, transcript_grade_pts = hp.compute_gpa_factors(main_courses)
-major_cred_hrs, major_grade_pts = hp.compute_gpa_factors(major_courses)
-honors_cred_hrs, honors_grade_pts = hp.compute_gpa_factors(
+transcript_cred_hrs, transcript_grade_pts = classes.compute_gpa_factors(transcript_courses)
+major_cred_hrs, major_grade_pts = classes.compute_gpa_factors(major_courses)
+honors_cred_hrs, honors_grade_pts = classes.compute_gpa_factors(
         archived_courses, transcript_cred_hrs, transcript_grade_pts)    
 
 # TODO: change gpa computation blocks to functions

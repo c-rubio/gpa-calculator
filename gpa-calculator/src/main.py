@@ -30,7 +30,7 @@ print("Welcome to the basic GPA Calculator")
 while True:             # outer loop covers a singular semester
     while True:         # inner loop covers a singular course
         # prompt user to input course information
-        course_name = input("Enter Course Name: ").upper()
+        course_name = input("\nEnter Course Name: ").upper()
         course_grade = input("Enter Course Letter Grade: ").upper()
         course_grade = hp.letter_to_num_grade(course_grade)
         course_hours = int(input("Enter Course Credit Hours: "))
@@ -64,16 +64,16 @@ while True:             # outer loop covers a singular semester
             main_courses[current_course.get_name()] = current_course
 
         continue_semester = hp.validate_input(
-            "Would you like to continue entering courses for this semester?" +
-            ", Y or N: ", ["Y", "y", "N", "n"], str).upper()
+            "\nWould you like to continue entering courses for this semester?" +
+            " Y or N: ", ["Y", "y", "N", "n"], str).upper()
         continue_semester = hp.convert_bool(continue_semester, "Y")
         if not continue_semester:
             break
 
     semester_count += 1
     continue_transcript = hp.validate_input(
-        "Would you like to continue to next semester?" + 
-        "Y or N: ", ["Y", "y", "N", "n"], str).upper()
+        "\nWould you like to continue to next semester?" + 
+        " Y or N: ", ["Y", "y", "N", "n"], str).upper()
     continue_transcript = hp.convert_bool(continue_transcript, "Y")
     if not continue_transcript:
         break
@@ -113,6 +113,6 @@ else:
     print("Primary GPA can not be computed. No credit hours attempted.")
     
 # TODO: Add in number of classes taken and split GPA by semester
+print(f"Transcript GPA: {gpa:.2f}")
 print(f"Major GPA: {major_gpa:.2f}")
 print(f"Honors GPA: {honors_gpa:.2f}")
-print(f"Primary GPA: {gpa:.2f}")

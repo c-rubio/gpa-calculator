@@ -74,7 +74,7 @@ def compute_gpa_factors(courses, cred_hrs: int = 0, grade_pts: int = 0):
     for course in courses.values():
         cred_hrs += course.get_hours()
         grade_pts += course.get_grade() * course.get_hours()
-        return cred_hrs, grade_pts
+    return cred_hrs, grade_pts
 
     
 def convert_bool(attr, true_var) -> bool:

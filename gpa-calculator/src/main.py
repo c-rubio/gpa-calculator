@@ -6,12 +6,12 @@ import classes
 import helpers as hp
 import splash
 
-transcript_courses = {}        # stores all courses except for outdated retaken courses
+transcript_courses = {}  # stores all courses except for outdated retaken courses
 major_courses = {}       # stores only courses related to major
 archived_courses = {}    # stores outdated retaken course grades
 
 semester_count = 1
-start = False
+user_menu_input = False
 
 # total - gpa factors that contribute towards transcript GPA
 transcript_cred_hrs = 0
@@ -31,15 +31,33 @@ splash.print_name()
 splash.print_title()
 
 # user is prompted to confirm program start, else the program is ended.
-start = hp.validate_input(
-    "\n\nEnter Y to start, N to exit: ", ["Y", "y", "N", "n"], str).upper()
-start = hp.convert_bool(start, true_var="Y")
-if not start:
+user_menu_input = hp.validate_input(
+    "\n\nMENU: \n 1. Start New Transcript\n 2. Load .csv transcripts" +
+    "\n 3. Exit \nEnter Selection: ",
+     [1, 2, 3], int)
+
+if user_menu_input == 3:
     print("\nGoodbye!")
     quit()
 
-while start:            # outer loop covers a semester(s)
-    while True:         # inner loop covers a singular course
+if user_menu_input == 2:
+    transcript_file = input("\nEnter transcript courses file name: ")
+    classes.read_courses(transcript_courses, transcript_file)
+    stop = False
+    for id in transcript_courses.keys():
+        for name, course_info in transcript_courses.items():
+            #TODO: Make retake detection a function
+            if transcript_courses[id].name == course_info.name and transcript_courses[id].semester != course_info.semester:
+                print("RETAKEN COURSE DETECTED")
+                is_course_retaken = True
+                archived_courses[id] = transcript_courses[id]
+                del transcript_courses[id]
+                stop = True
+                break
+        if stop is True: break
+
+while user_menu_input == 1:            # outer loop covers a semester(s)
+    while True:                        # inner loop covers a singular course
         # prompt user to input course information
         course_name = input("\nEnter Course Name: ").upper()
         course_grade = input("Enter Course Letter Grade: ").upper()
@@ -50,20 +68,23 @@ while start:            # outer loop covers a semester(s)
             "Is this course a major course? Y or N: ",
             ["Y", "y", "N", "n"], str).upper()
         is_course_major = hp.convert_bool(is_course_major, true_var="Y")
-        is_course_duplicate = False
 
+        is_course_retaken = False
+        # Detects if a course is retaken based upon repeated names in separate 
+        # semesters.
         if semester_count > 1:
             for name, course_info in transcript_courses.items():
+                #TODO: Make retake detection a function
                 if course_name == name and semester_count != course_info.semester:
-                    print("DUPLICATE COURSE DETECTED")
-                    is_course_duplicate = True
+                    print("RETAKEN COURSE DETECTED")
+                    is_course_retaken = True
                     archived_courses[course_name] = transcript_courses[name]
                     del transcript_courses[name]
                     break
          
         current_course = classes.Course(
         course_name, course_grade, course_hours, is_course_major,
-        is_course_duplicate, semester_count)
+        is_course_retaken, semester_count)
         transcript_courses[current_course.name] = current_course
 
         continue_semester = hp.validate_input(
@@ -82,9 +103,9 @@ while start:            # outer loop covers a semester(s)
         break
 
 # filling the major_courses dict with a student's major related courses.
-for course in transcript_courses.values():
+for id, course in transcript_courses.items():
     if course.is_major:
-        major_courses[course.name] = transcript_courses[course.name]
+        major_courses[id] = transcript_courses[id]
 
 # computing all gpa factors using course dictionaries
 transcript_cred_hrs, transcript_grade_pts = classes.compute_gpa_factors(transcript_courses)
@@ -119,3 +140,12 @@ else:
 print(f"\nTranscript GPA: {gpa:.2f}")
 print(f"Honors GPA: {honors_gpa:.2f}")
 print(f"Major GPA: {major_gpa:.2f}")
+
+store_transcript = hp.validate_input(
+"\nWould you like to store your current transcript?" +
+" Y or N: ", ["Y", "y", "N", "n"], str).upper()
+
+if store_transcript:
+    transcript_file = input("\nEnter transcript courses file name (e.g. 'courses'): ")
+    transcript_courses.update(archived_courses)
+    classes.write_courses(transcript_courses, transcript_file)

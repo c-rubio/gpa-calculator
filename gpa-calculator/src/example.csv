@@ -1,0 +1,5 @@
+name,grade,hours,is_major,is_retaken,semester
+comp,4.0,3.0,False,False,0
+phys,3.0,3.0,False,False,0
+engl,3.0,3.0,False,False,1
+engl,4.0,3.0,False,True,2

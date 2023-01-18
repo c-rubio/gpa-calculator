@@ -35,7 +35,7 @@ def compute_gpa_factors(courses, cred_hrs: int = 0, grade_pts: int = 0):
 
 def write_courses(course_dict: dict, file_name: str):
 
-    with open(f'gpa-calculator/src/{file_name}.csv', 'w') as csv_file:
+    with open(f'{file_name}.csv', 'w') as csv_file:
         csv_writer = csv.DictWriter(csv_file, fieldnames = CSV_FIELDS)
         csv_writer.writeheader()
         for course in course_dict.values():
@@ -44,7 +44,7 @@ def write_courses(course_dict: dict, file_name: str):
 def read_courses(course_dict: dict, file_name: str):
 
     csv_list = []
-    with open(f'gpa-calculator/src/{file_name}', 'r') as csv_file:
+    with open(f'{file_name}.csv', 'r') as csv_file:
             csv_info = csv.DictReader(csv_file)
             for line in csv_info:
                 csv_list.append(dict(line))

@@ -47,7 +47,8 @@ if user_menu_input == 2:
     for id in transcript_courses.keys():
         for name, course_info in transcript_courses.items():
             #TODO: Make retake detection a function
-            if transcript_courses[id].name == course_info.name and transcript_courses[id].semester != course_info.semester:
+            if (transcript_courses[id].name == course_info.name) and (
+                transcript_courses[id].semester != course_info.semester):
                 print("RETAKEN COURSE DETECTED")
                 is_course_retaken = True
                 archived_courses[id] = transcript_courses[id]
@@ -76,7 +77,7 @@ while user_menu_input == 1:            # outer loop covers a semester(s)
             for name, course_info in transcript_courses.items():
                 #TODO: Make retake detection a function
                 if course_name == name and semester_count != course_info.semester:
-                    print("RETAKEN COURSE DETECTED")
+                    print("RETAKEN COURSE DETECTED, Archiving Lowest Course")
                     is_course_retaken = True
                     archived_courses[course_name] = transcript_courses[name]
                     del transcript_courses[name]
@@ -144,8 +145,10 @@ print(f"Major GPA: {major_gpa:.2f}")
 store_transcript = hp.validate_input(
 "\nWould you like to store your current transcript?" +
 " Y or N: ", ["Y", "y", "N", "n"], str).upper()
+store_transcript = hp.convert_bool(store_transcript, "Y")
 
 if store_transcript:
     transcript_file = input("\nEnter transcript courses file name (e.g. 'courses'): ")
     transcript_courses.update(archived_courses)
     classes.write_courses(transcript_courses, transcript_file)
+    print(f"File saved as {transcript_file}.csv in src folder.")

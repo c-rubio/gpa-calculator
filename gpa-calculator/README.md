@@ -1,21 +1,28 @@
 # GPA CALCULATOR
 
 <br />
-<div align="center">
+<div align="left">
 
 ![splash](https://user-images.githubusercontent.com/98237169/212800767-5f6c2d05-7fd2-4d21-ac63-6fb39fd08291.png)
 
-<h3 align="center"></h3>
-
-  <p align="center">
-This is a basic GPA calculator that can consider for various GPA types, including the transcript GPA, honors GPA, and major GPA. Grade policies are based upon NC A&T policies.
+  <p align="left">
+The GPA calculator can consider for various GPA types, including the transcript GPA, honors GPA, and major GPA. Grade policies are based upon NC A&T policies.
 
 Code standardization is observed (PEP8), as well as modular programming. Object-Oriented Programming is implemented with the dataclass "Course" that stores course data. The dictionary data structure is used to store instances of courses. 
 
-A retaken course is automatically detected based upon whether or not a course name is repeated in a differing semester. 
-    <br />
   </p>
 </div>
+
+
+<h3 align="left">Features</h3>
+
+
+  - Calculation of NC A&T Transcript, Honors, and Major GPA
+  - Write to .csv files for persistent storage of new transcript
+  - Read .csv files to calculate GPA
+  - Implementation of dataclass module to simplify course storage and access
+  - Automatic retaken course detection
+
 
 #### User Prompts Per Course
 
@@ -26,47 +33,12 @@ A retaken course is automatically detected based upon whether or not a course na
     Enter Course Letter Grade: C
     Enter Course Credit Hours: 3
     Is this course a major course? Y or N: Y
-    Is this course a duplicate course Y or N: N
   
-    Would you like to continue entering courses for this semester? Y or N: Y
-   ```
-  
-#### Example User Prompts cont.
-  
-<div align="left">
-  
-   ```
-    Enter Course Name: ENGL 101
-    Enter Course Letter Grade: A
-    Enter Course Credit Hours: 3
-    Is this course a major course? Y or N: N
-    Is this course a duplicate course Y or N: N
-
-    Would you like to continue entering courses for this semester? Y or N: N
-
-    Would you like to continue to next semester? Y or N: Y
-
-    Enter Course Name: PHYS 101
-    Enter Course Letter Grade: B
-    Enter Course Credit Hours: 3
-    Is this course a major course? Y or N: N
-    Is this course a duplicate course Y or N: N
-
-    Would you like to continue entering courses for this semester? Y or N: Y
-
-    Enter Course Name: COMP 101
-    Enter Course Letter Grade: A
-    Enter Course Credit Hours: 3
-    Is this course a major course? Y or N: Y
-    Is this course a duplicate course Y or N: Y
-
-    Would you like to continue entering courses for this semester? Y or N: N
-  
-    Would you like to continue to next semester? Y or N: N
-   ```
-</div>
+    Would you like to continue entering courses for this semester? Y or N: N 
     
-#### Final GPA display to user
+    Would you like to continue to next semester? Y or N: Y
+   ```
+#### Example GPA display to user
   
 <div align="left">
   
@@ -76,5 +48,21 @@ A retaken course is automatically detected based upon whether or not a course na
     Major GPA: 4.00
    ```
 
+</div>
+
+#### Dataclass implementation
+  
+<div align="left">
+  
+   ```python
+  @dataclass
+  class Course:
+    name : str = ""
+    grade : float = 0.00
+    hours : float = 0.00
+    is_major : bool = False
+    is_retaken : bool = False
+    semester: int = 0
+   ```
 </div>
 

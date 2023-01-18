@@ -2,9 +2,9 @@
 # using Object-Oriented Programming.
 
 
-import classes
-import helpers as hp
-import splash
+import src.classes as classes
+import src.helpers as hp
+import src.splash as splash
 
 transcript_courses = {}  # stores all courses except for outdated retaken courses
 major_courses = {}       # stores only courses related to major

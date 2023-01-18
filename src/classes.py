@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import csv
-import helpers as hp
+import src.helpers as hp
 
 @dataclass
 class Course:

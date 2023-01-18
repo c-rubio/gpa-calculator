@@ -1,3 +1,0 @@
-# OBJECT AVOIDING ARDUINO CAR
-
-Placeholder.

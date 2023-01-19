@@ -8,7 +8,7 @@
   <p align="left">
 The GPA calculator can consider for various GPA types, including the transcript GPA, honors GPA, and major GPA. Grade policies are based upon NC A&T policies.
 
-Code standardization is observed (PEP8), as well as modular programming. Object-Oriented Programming is implemented with the dataclass "Course" that stores course data. The dictionary data structure is used to store instances of courses. 
+Modular and Object-Oriented Programming is implemented with the dataclass "Course" that stores course data. The dictionary data structure is used to store course information and allows writing to .csv with the DictWriter method.
 
   </p>
 </div>

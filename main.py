@@ -152,3 +152,4 @@ if store_transcript:
     transcript_courses.update(archived_courses)
     classes.write_courses(transcript_courses, transcript_file)
     print(f"File saved as {transcript_file}.csv in src folder.")
+
